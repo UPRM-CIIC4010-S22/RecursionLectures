@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -69,6 +71,33 @@ bool isPalindrome(string  word) {
 
 }
 
+vector<string> permutations(string w) 
+{
+
+    vector<string> result;
+
+    if (w.size() <= 1) {
+        result.push_back(w);
+        return result;
+    }
+
+    for (int i=0; i<w.size(); i++) {
+
+        string letterToRemove = w.substr(i,1);
+        string shorterWord = w.substr(0,i) + w.substr(i+1,w.size() - i - 1);
+        vector<string> shorterPerms = permutations(shorterWord);
+        for (string nextString : shorterPerms) {
+            result.push_back(letterToRemove + nextString);
+        }
+
+    }
+
+    return result;
+
+
+
+}
+
 int main() {
 
     cout << "Hello World" << endl;
@@ -103,4 +132,18 @@ int main() {
     cout << "radal: " << (isPalindrome("radal") ? "TRUE" : "FALSE") << endl;
     cout << "acbcba: " << (isPalindrome("acbcba") ? "TRUE" : "FALSE") << endl;
 
+    string w1 = "eat";
+    cout << "Permutations for " << w1 << endl;
+    vector<string> eatPerms = permutations(w1);
+    for (string next : eatPerms) {
+        cout << next << endl;
+    }
+
+    string w2 = "bienve";
+    cout << "Permutations for " << w2 << endl;
+    vector<string> bienvePerms = permutations(w2);
+    for (string next : bienvePerms) {
+        cout << next << endl;
+    }
+    
 }
