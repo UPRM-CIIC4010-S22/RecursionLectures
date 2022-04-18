@@ -58,6 +58,17 @@ long recFibonacci2(int n) {
 
 }
 
+bool isPalindrome(string  word) {
+
+    if (word.size() <= 1) return true;
+    if (word[0] == word[word.size() - 1]) {
+        return isPalindrome(word.substr(1, word.size()-2));
+    } else {
+        return false;
+    }
+
+}
+
 int main() {
 
     cout << "Hello World" << endl;
@@ -83,9 +94,13 @@ int main() {
         cout << "recFibonacci2(" << i << ") = " << recFibonacci2(i) << endl;
     }
 
-    for (int i = 0; i <= 100; i++) {
+    // for (int i = 0; i <= 100; i++) {
 
-        cout << "recFibonacci(" << i << ") = " << recFibonacci(i) << endl;
-    }
+    //     cout << "recFibonacci(" << i << ") = " << recFibonacci(i) << endl;
+    // }
+
+    cout << "radar: " << (isPalindrome("radar") ? "TRUE" : "FALSE") << endl;
+    cout << "radal: " << (isPalindrome("radal") ? "TRUE" : "FALSE") << endl;
+    cout << "acbcba: " << (isPalindrome("acbcba") ? "TRUE" : "FALSE") << endl;
 
 }
