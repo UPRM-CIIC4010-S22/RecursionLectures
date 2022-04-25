@@ -100,11 +100,11 @@ vector<string> permutations(string w)
 
 int maze[6][6] =
     {
-        {2, 2, 2, 2, 2, 3},
+        {2, 2, 2, 2, 2, 2},
         {0, 0, 2, 0, 0, 2},
-        {0, 0, 2, 0, 0, 2},
-        {2, 2, 2, 0, 2, 2},
-        {0, 0, 2, 2, 2, 0},
+        {0, 0, 2, 0, 0, 0},
+        {3, 0, 2, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0}};
 
 bool findCheese(int row, int col) {
@@ -126,10 +126,19 @@ bool findCheese(int row, int col) {
     }
     maze[row][col] = 1;  // Mark new place
 
-    if (findCheese(row-1, col)) {
+    if (findCheese(row-1, col)) {  // Try up
         return true;
     }
-
+    if (findCheese(row, col+1)) {  // Try right
+        return true;
+    }    
+    if (findCheese(row+1, col)) {  // Try down
+        return true;
+    } 
+    if (findCheese(row, col-1)) {  // Try left
+        return true;
+    }
+    return false;
 }
 
 
@@ -180,5 +189,7 @@ int main() {
     for (string next : bienvePerms) {
         cout << next << endl;
     }
+
+    cout << (findCheese(0,0) ? "Cheese Found" : "Cheese Not Found") << endl;
     
 }
