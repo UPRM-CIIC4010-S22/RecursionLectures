@@ -100,45 +100,49 @@ vector<string> permutations(string w)
 
 int maze[6][6] =
     {
-        {2, 2, 2, 2, 2, 2},
+        {2, 2, 2, 0, 2, 2},
         {0, 0, 2, 0, 0, 2},
-        {0, 0, 2, 0, 0, 0},
-        {3, 0, 2, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0}};
+        {0, 0, 2, 2, 2, 2},
+        {2, 2, 2, 0, 2, 0},
+        {0, 0, 0, 0, 2, 0},
+        {0, 3, 2, 2, 2, 0}};
 
-bool findCheese(int row, int col) {
+string findCheese(int row, int col) {
 
     if (row < 0 || row > 5) {
-        return false;
+        return "";
     }
     if (col < 0 || col > 5) {
-        return false;
+        return "";
     }
     if (maze[row][col] == 3) {  // Found cheese
-        return true;
+        return "[" + to_string(row) + "," + to_string(col) + "]";
     }
     if (maze[row][col] == 0) {  // Hit on wall
-        return false;
+        return "";
     }
     if (maze[row][col] == 1) {  // Been there
-        return false;
+        return "";
     }
     maze[row][col] = 1;  // Mark new place
 
-    if (findCheese(row-1, col)) {  // Try up
-        return true;
+    string path = findCheese(row-1, col);
+    if (!path.empty()) {  // Try up
+        return "[" + to_string(row) + "," + to_string(col) + "]" + path;
     }
-    if (findCheese(row, col+1)) {  // Try right
-        return true;
-    }    
-    if (findCheese(row+1, col)) {  // Try down
-        return true;
+    path = findCheese(row, col+1);
+    if (!path.empty()) {  // Try right
+        return "[" + to_string(row) + "," + to_string(col) + "]" + path;
+    }  
+    path = findCheese(row+1, col);
+    if (!path.empty()) {  // Try down
+        return "[" + to_string(row) + "," + to_string(col) + "]" + path;
+    }  
+    path = findCheese(row, col-1);
+    if (!path.empty()) {  // Try left
+        return "[" + to_string(row) + "," + to_string(col) + "]" + path;
     } 
-    if (findCheese(row, col-1)) {  // Try left
-        return true;
-    }
-    return false;
+    return "";
 }
 
 
@@ -190,6 +194,7 @@ int main() {
         cout << next << endl;
     }
 
-    cout << (findCheese(0,0) ? "Cheese Found" : "Cheese Not Found") << endl;
-    
+    string routeToCheese = findCheese(0,0);
+    cout << (routeToCheese.empty() ? "Cheese NotFound" : "Route to Cheese: " + routeToCheese)
+         << endl;
 }
