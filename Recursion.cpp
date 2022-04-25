@@ -98,6 +98,41 @@ vector<string> permutations(string w)
 
 }
 
+int maze[6][6] =
+    {
+        {2, 2, 2, 2, 2, 3},
+        {0, 0, 2, 0, 0, 2},
+        {0, 0, 2, 0, 0, 2},
+        {2, 2, 2, 0, 2, 2},
+        {0, 0, 2, 2, 2, 0},
+        {0, 0, 0, 0, 0, 0}};
+
+bool findCheese(int row, int col) {
+
+    if (row < 0 || row > 5) {
+        return false;
+    }
+    if (col < 0 || col > 5) {
+        return false;
+    }
+    if (maze[row][col] == 3) {  // Found cheese
+        return true;
+    }
+    if (maze[row][col] == 0) {  // Hit on wall
+        return false;
+    }
+    if (maze[row][col] == 1) {  // Been there
+        return false;
+    }
+    maze[row][col] = 1;  // Mark new place
+
+    if (findCheese(row-1, col)) {
+        return true;
+    }
+
+}
+
+
 int main() {
 
     cout << "Hello World" << endl;
